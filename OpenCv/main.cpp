@@ -9,7 +9,7 @@
 using namespace std;
 using namespace cv;
 
-int RED[37][2] = {   
+int RED[37][2] = {
                     {140,45},
                     {140,46},
                     { 140,47},
@@ -46,86 +46,9 @@ int RED[37][2] = {
                     { 151, 46},
                     { 151, 48},
                     { 151, 49},
-                    { 151, 50}};
+                    { 151, 50} };
 
-int BLUE[124][2] = {
-    {16,4},
-    {16,5},
-    {16,6},
-    {16,7},
-    {16,8},
-    {16,9},
-    {16,10},
-    {16,11},
-    {16,15},
-    {16,17},
-    {16,18},
-    {16,19},
-   {16,20},
-   {16,21},
-   {16,22},
-   {25,4},
-   {25,5},
-   {25,6},
-   {25,7},
-   {25,8},
-   {25,9},
-   {25,10},
-   {25,11},
-   {25,15},
-   {25,16},
-   {25,17},
-   {25,18},
-   {25,19},
-   {25,20},
-   {25,21},
-   {25,22},
-   {28,4},
-   {28,5},
-   {28,6},
-   {28,7},
-   {28,8},
-   {28,9},
-   {28,10},
-   {28,11},
-   {28,15},
-   {28,16},
-   {28,17},
-   {28,18},
-   {28,19},
-   {28,20},
-   {28,21},
-   {28,22},
-   {34,42},
-   {34,54},
-   {35,42},
-   {35,54},
-   {36,42},
-   {36,54},
-   {37,4},
-   {37,5},
-{37,6},
-{37,7},
-{37,8},
-{37,9},
-{37,10},
-{37,11},
-{37,15},
-{37,16},
-{37,17},
-{37,18},
-{37,19},
-{37,20},
-{37,21},
-{37,22},
-{37,42},
-{37,54},
-{38,42},
-{38,54},
-{39,42},
-{39,54},
-{40,42},
-{40,54},
+int BLUE[46][2] = {
 {142,44},
 {142,45},
 {142,46},
@@ -205,7 +128,7 @@ int YELLOW[32][2] = {
 {149,46},
 {149,47},
 {150,45},
-{150, 46}};
+{150, 46} };
 int c = 0;
 int d = 0;
 int e = 0;
@@ -214,91 +137,134 @@ Vec3b bridge;
 queue<pair<int, int>>future_RED;
 queue<pair<int, int>>future_BLUE;
 queue<pair<int, int>>future_YELLOW;
+string imagePath = "C:/Users/yetam/source/repos/OpenCv/OpenCv/Screenshot.png";
+void moveX(int shift);
+
 int main() {
     cout << "Hello, World!" << endl;
     cout << "OpenCV version is " << CV_VERSION << endl;
-    string imagePath = "C:/Users/yetam/source/repos/OpenCv/OpenCv/Screenshot.png";
-    ofstream outputFile;
-    outputFile.open("C:/Users/yetam/source/repos/OpenCv/OpenCv/output12.csv", ios::out | ios::app);
+   
+    
+    //   for (int i = 0; i < 15; i++)
+     //  {
+    int t1 = 10;
+    moveX(t1);
+    // }
+    return 0;
+}
+void moveX( int t1) {
+
+    // outputFile.open("C:/Users/yetam/source/repos/OpenCv/OpenCv/output12.csv", ios::out | ios::app);
+    // outputFile.close();
     Mat image = imread(imagePath, IMREAD_COLOR);
-    cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
-    for (int i = 0; i < image.rows; ++i) {
-        for (int j = 0; j < image.cols; ++j) {
-            Vec3b pix = image.at<Vec3b>(i, j);
-			if (i == 0 && j == 0)
-                 black = image.at<Vec3b>(0, 0);
-            
-            int r = pix[0], g = pix[1], b = pix[2];
-          
-            
-            
-            if (r == 255 && g == 66 && b == 41)
-            {
+    // resize(image, image, { 500, 500 }, 0, 0, cv::INTER_NEAREST);
+    imshow("Image", image);
+    waitKey(500);
+    // cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+    for (int k = 0; k < t1; k++) {
 
-                if (i == RED[c][0] && j == RED[c][1]) {
-                    c++;
-                    if (j + 15 < image.cols) {
-                        image.at<Vec3b>(i, j + 15) = pix;
-                    }
-                                                      }
+        cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
 
 
-            }  
-            
-            
-            if (r == 82 && g == 33 && b == 222)
-            {
+        for (int i = 0; i < image.rows; ++i) {
+            for (int j = 0; j < image.cols; ++j) {
+                Vec3b pix = image.at<Vec3b>(i, j);
+                if (i == 0 && j == 0)
+                    black[0] = 0;
+                black[1] = 0;
+                black[2] = 0;
 
-                if (i == BLUE[d][0] && j == BLUE[d][1])
-                                                        {
-                    d++;
-                    if (j + 15 < image.cols) {
-                        image.at<Vec3b>(i, j + 15) = pix;
-                    }
+                int r = pix[0], g = pix[1], b = pix[2];
 
-                                                        }
-            }    
-            
-            if (r == 255 && g == 222 && b == 181)
-            {
-                if (i == YELLOW[e][0] && j == YELLOW[e][1])
+
+
+                if (r == 255 && g == 66 && b == 41)
                 {
-                    e++;
-                    if (j + 15 < image.cols) {
-                        image.at<Vec3b>(i, j + 15) = pix;
+
+                    if (i == RED[c][0] && j == RED[c][1]) {
+                        c++;
+                        if (j + 15 < image.cols) {
+                            image.at<Vec3b>(i, j + 15) = pix;
+                        }
                     }
+
 
                 }
-            } 
 
-            if (r == 255 && g == 66 && b == 107)
-            {
-                bridge = pix;
+
+                if (r == 82 && g == 33 && b == 222)
+                {
+
+                    if (i == BLUE[d][0] && j == BLUE[d][1])
+                    {
+                        d++;
+                        if (j + 15 < image.cols) {
+                            image.at<Vec3b>(i, j + 15) = pix;
+                        }
+
+                    }
+                }
+
+                if (r == 255 && g == 222 && b == 181)
+                {
+                    if (k == 1)
+                        cout << "Yellow: " << i << " " << j << " " << e << " " << YELLOW[e][1] << endl;
+					
+                    if (i == YELLOW[e][0] && j == YELLOW[e][1])
+                    {
+                      
+                        e++;
+                        if (j + 15 < image.cols) {
+                            image.at<Vec3b>(i, j + 15) = pix;
+                        }
+
+                    }
+                }
+
+                if (r == 255 && g == 66 && b == 107)
+                {
+                    bridge = pix;
+                }
+
             }
-            
+
+
         }
 
+        for (int n = 0; n < 37; n++) {
+            if (RED[n][1] < image.cols)
+                image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+        }
+        for (int n = 0; n < 46; n++) {
+            image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+            if (n >= 37 && n <= 45)
+            {
+                image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+            }
 
+        }
+        for (int n = 0; n < 32; n++) {
+            if (YELLOW[n][1] < image.cols)
+                image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+        }
+
+        for (int n = 0; n < 37; n++) {
+            RED[n][1] = RED[n][1] + 15;
+        }
+        for (int n = 0; n < 124; n++) {
+            BLUE[n][1] = BLUE[n][1] + 15;
+        }
+        c = 0;
+        d = 0;
+        e = 0;
+        cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+        
+       // resize(image, image, { 500, 500 }, 0, 0, cv::INTER_NEAREST);
+        imshow("Image", image);
+        waitKey(1000);
     }
-    
-	for (int i = 0; i < 37; i++) {
-            image.at<Vec3b>(RED[i][0], RED[i][1]) = black;
-	}
-	for (int i = 0; i < 124; i++) {
-		image.at<Vec3b>(BLUE[i][0], BLUE[i][1]) = black;
-        if (i >= 115 && i <= 123)
-        {
-            image.at<Vec3b>(BLUE[i][0], BLUE[i][1]) = bridge;
-        }
-	
-	}
-    for (int i = 0; i < 32; i++) {
-        image.at<Vec3b>(YELLOW[i][0], YELLOW[i][1]) = black;
-    } 
-	outputFile.close();
-    cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
-	resize(image, image, { 500, 500 }, 0 , 0 , cv::INTER_NEAREST);
-	imshow("Image", image);
-	waitKey(0);
-    return 0;
+    //destroyWindow("Image History");
+    //destroyWindow("Image");
+    waitKey();
+    return;
 }
