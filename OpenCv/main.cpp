@@ -160,10 +160,10 @@ void moveX(Mat image, int t1) {
     imshow("Image", image);
     waitKey(500);
     // cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
-    for (int k = 0; k < t1; k++) {
+    for (int k = 0; k < 10; k++) {
 
         cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
-
+	//	cout << image.rows << " " << image.cols << endl;
 
         for (int i = 0; i < image.rows; ++i) {
             for (int j = 0; j < image.cols; ++j) {
@@ -225,7 +225,7 @@ void moveX(Mat image, int t1) {
 
 
         }
-
+        
         for (int n = 0; n < 37; n++) {
             if (RED[n][1] < image.cols)
                 image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
@@ -242,12 +242,116 @@ void moveX(Mat image, int t1) {
             if (YELLOW[n][1] < image.cols)
                 image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
         }
-
+        
         for (int n = 0; n < 37; n++) {
             RED[n][1] = RED[n][1] + 15;
         }
         for (int n = 0; n < 124; n++) {
             BLUE[n][1] = BLUE[n][1] + 15;
+        }
+        
+        c = 0;
+        d = 0;
+        e = 0;
+        cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+        // resize(image, image, { 500, 500 }, 0, 0, cv::INTER_NEAREST);
+        imshow("Image", image);
+        waitKey(500);
+    }
+
+    for (int k = 0; k < 1; k++) {
+
+        cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+
+	//	cout << "Y-AXIS SHIFT: "  << endl;
+        for (int i = 0; i < image.rows; ++i) {
+            for (int j = 0; j < image.cols; ++j) {
+                Vec3b pix = image.at<Vec3b>(i, j);
+                if (i == 0 && j == 0)
+                    black[0] = 0;
+                black[1] = 0;
+                black[2] = 0;
+
+                int r = pix[0], g = pix[1], b = pix[2];
+             //   cout << "FILTRATION" << endl;
+              //  cout << image.rows << " " << image.cols << endl;
+
+                if (r == 255 && g == 66 && b == 41)
+                {
+
+                    if (i == RED[c][0] && j == RED[c][1]) {
+                        c++;         
+                        if (i  > 0) {
+                            image.at<Vec3b>(i - 20, j) = pix;
+							
+                        }
+                    }
+
+
+                }
+
+
+                if (r == 82 && g == 33 && b == 222)
+                {
+
+                    if (i == BLUE[d][0] && j == BLUE[d][1])
+                    {
+                        d++;
+                        if (i > 0) {
+                            image.at<Vec3b>(i - 20, j) = pix;
+						
+                        }
+
+                    }
+                }
+
+                if (r == 255 && g == 222 && b == 181)
+                {
+                    if (i == YELLOW[e][0] && j == YELLOW[e][1])
+                    {
+                        e++;
+                        if (i  > 0) {
+                            image.at<Vec3b>(i - 20, j) = pix;
+							
+                        }
+
+                    }
+                }
+
+                if (r == 255 && g == 66 && b == 107)
+                {
+                    bridge = pix;
+                }
+
+            }
+
+
+        }
+        
+        for (int n = 0; n < 37; n++) {
+//            if (RED[n][0] < image.rows)
+     //           image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+        }
+        for (int n = 0; n < 46; n++) {
+            if (BLUE[n][0] > 0)
+            image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+            if (n >= 37 && n <= 45)
+            {
+                if (BLUE[n][0] > 0)
+                image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+            }
+
+        }
+        for (int n = 0; n < 32; n++) {
+            if (YELLOW[n][0] > 0)
+                image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+        } 
+
+        for (int n = 0; n < 37; n++) {
+            RED[n][0] = RED[n][0] - 20;
+        }
+        for (int n = 0; n < 124; n++) {
+            BLUE[n][0] = BLUE[n][0] - 20;
         }
 
         c = 0;
@@ -256,8 +360,9 @@ void moveX(Mat image, int t1) {
         cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
         // resize(image, image, { 500, 500 }, 0, 0, cv::INTER_NEAREST);
         imshow("Image", image);
-        waitKey(1000);
+        waitKey(500);
     }
+    waitKey();
     //destroyWindow("Image History");
     //destroyWindow("Image");
 }
