@@ -137,7 +137,7 @@ Vec3b bridge;
 queue<pair<int, int>>future_RED;
 queue<pair<int, int>>future_BLUE;
 queue<pair<int, int>>future_YELLOW;
-void moveX(Mat path, int shift);
+void moveXY(Mat path, int shift);
 
 int main() {
     cout << "Hello, World!" << endl;
@@ -147,11 +147,11 @@ int main() {
     //   for (int i = 0; i < 15; i++)
      //  {
     int t1 = 10;
-    moveX(image, t1);
+    moveXY(image, t1);
     // }
     return 0;
 }
-void moveX(Mat image, int t1) {
+void moveXY(Mat image, int t1) {
 
     // outputFile.open("C:/Users/yetam/source/repos/OpenCv/OpenCv/output12.csv", ios::out | ios::app);
     // outputFile.close();
@@ -362,7 +362,8 @@ void moveX(Mat image, int t1) {
         imshow("Image", image);
         waitKey(500);
     }
-    waitKey();
-    //destroyWindow("Image History");
-    //destroyWindow("Image");
+  //  waitKey();
+    destroyWindow("Image");
+//    destroyWindow("Image");
+    return;
 }
