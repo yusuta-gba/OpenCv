@@ -1,3 +1,5 @@
+#include <vector>
+#include <array>
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
@@ -9,6 +11,7 @@
 using namespace std;
 using namespace cv;
 
+//vector<std::array<int, 2>> RED(37), BLUE(124), YELLOW(32);
 int RED[37][2] = {
                     {140,45},
                     {140,46},
@@ -149,6 +152,11 @@ int main() {
     int t1 = 10;
     moveXY(image, t1);
     // }
+    /*
+    while (true)
+    {
+        cout << "HELLO" << endl;
+   } */
     return 0;
 }
 void moveXY(Mat image, int t1) {
@@ -163,7 +171,7 @@ void moveXY(Mat image, int t1) {
     for (int k = 0; k < 10; k++) {
 
         cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
-	//	cout << image.rows << " " << image.cols << endl;
+        //	cout << image.rows << " " << image.cols << endl;
 
         for (int i = 0; i < image.rows; ++i) {
             for (int j = 0; j < image.cols; ++j) {
@@ -179,40 +187,50 @@ void moveXY(Mat image, int t1) {
 
                 if (r == 255 && g == 66 && b == 41)
                 {
+                    if (c < 37 &&
+                        RED[c][0] >= 0 && RED[c][0] < image.rows &&
+                        RED[c][1] >= 0 && RED[c][1] < image.cols) {
+                        if (i == RED[c][0] && j == RED[c][1]) {
 
-                    if (i == RED[c][0] && j == RED[c][1]) {
-                        c++;
-                        if (j + 15 < image.cols) {
-                            image.at<Vec3b>(i, j + 15) = pix;
+                            c++;
+                            if (j + 15 < image.cols) {
+                                image.at<Vec3b>(i, j + 15) = pix;
+                            }
                         }
                     }
-
 
                 }
 
 
                 if (r == 82 && g == 33 && b == 222)
                 {
+                    if (d < 46 &&
+                        BLUE[c][0] >= 0 && BLUE[c][0] < image.rows &&
+                        BLUE[c][1] >= 0 && BLUE[c][1] < image.cols) {
+                        if (i == BLUE[d][0] && j == BLUE[d][1])
+                        {
+                            d++;
+                            if (j + 15 < image.cols) {
+                                image.at<Vec3b>(i, j + 15) = pix;
+                            }
 
-                    if (i == BLUE[d][0] && j == BLUE[d][1])
-                    {
-                        d++;
-                        if (j + 15 < image.cols) {
-                            image.at<Vec3b>(i, j + 15) = pix;
                         }
-
                     }
                 }
 
                 if (r == 255 && g == 222 && b == 181)
                 {
-                    if (i == YELLOW[e][0] && j == YELLOW[e][1])
-                    {
-                        e++;
-                        if (j + 15 < image.cols) {
-                            image.at<Vec3b>(i, j + 15) = pix;
-                        }
+                    if (e < 32 &&
+                        YELLOW[c][0] >= 0 && YELLOW[c][0] < image.rows &&
+                        YELLOW[c][1] >= 0 && YELLOW[c][1] < image.cols) {
+                        if (i == YELLOW[e][0] && j == YELLOW[e][1])
+                        {
+                            e++;
+                            if (j + 15 < image.cols) {
+                                image.at<Vec3b>(i, j + 15) = pix;
+                            }
 
+                        }
                     }
                 }
 
@@ -225,7 +243,7 @@ void moveXY(Mat image, int t1) {
 
 
         }
-        
+
         for (int n = 0; n < 37; n++) {
             if (RED[n][1] < image.cols)
                 image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
@@ -242,14 +260,17 @@ void moveXY(Mat image, int t1) {
             if (YELLOW[n][1] < image.cols)
                 image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
         }
-        
+
         for (int n = 0; n < 37; n++) {
             RED[n][1] = RED[n][1] + 15;
         }
-        for (int n = 0; n < 124; n++) {
+        for (int n = 0; n < 46; n++) {
             BLUE[n][1] = BLUE[n][1] + 15;
         }
-        
+        for (int n = 0; n < 32; n++) {
+            YELLOW[n][1] = YELLOW[n][1] + 15;
+        }
+
         c = 0;
         d = 0;
         e = 0;
@@ -258,12 +279,12 @@ void moveXY(Mat image, int t1) {
         imshow("Image", image);
         waitKey(500);
     }
-
+    
     for (int k = 0; k < 1; k++) {
 
         cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
 
-	//	cout << "Y-AXIS SHIFT: "  << endl;
+        //	cout << "Y-AXIS SHIFT: "  << endl;
         for (int i = 0; i < image.rows; ++i) {
             for (int j = 0; j < image.cols; ++j) {
                 Vec3b pix = image.at<Vec3b>(i, j);
@@ -273,17 +294,17 @@ void moveXY(Mat image, int t1) {
                 black[2] = 0;
 
                 int r = pix[0], g = pix[1], b = pix[2];
-             //   cout << "FILTRATION" << endl;
-              //  cout << image.rows << " " << image.cols << endl;
+                //   cout << "FILTRATION" << endl;
+                 //  cout << image.rows << " " << image.cols << endl;
 
                 if (r == 255 && g == 66 && b == 41)
                 {
 
                     if (i == RED[c][0] && j == RED[c][1]) {
-                        c++;         
-                        if (i  > 0) {
+                        c++;
+                        if (i > 0) {
                             image.at<Vec3b>(i - 20, j) = pix;
-							
+
                         }
                     }
 
@@ -299,7 +320,7 @@ void moveXY(Mat image, int t1) {
                         d++;
                         if (i > 0) {
                             image.at<Vec3b>(i - 20, j) = pix;
-						
+
                         }
 
                     }
@@ -310,9 +331,9 @@ void moveXY(Mat image, int t1) {
                     if (i == YELLOW[e][0] && j == YELLOW[e][1])
                     {
                         e++;
-                        if (i  > 0) {
+                        if (i > 0) {
                             image.at<Vec3b>(i - 20, j) = pix;
-							
+
                         }
 
                     }
@@ -327,32 +348,35 @@ void moveXY(Mat image, int t1) {
 
 
         }
-        
+
         for (int n = 0; n < 37; n++) {
-//            if (RED[n][0] < image.rows)
-     //           image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+            //            if (RED[n][0] < image.rows)
+                 //           image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
         }
         for (int n = 0; n < 46; n++) {
             if (BLUE[n][0] > 0)
-            image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+                image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
             if (n >= 37 && n <= 45)
             {
                 if (BLUE[n][0] > 0)
-                image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+                    image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
             }
 
         }
         for (int n = 0; n < 32; n++) {
             if (YELLOW[n][0] > 0)
                 image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
-        } 
+        }
 
         for (int n = 0; n < 37; n++) {
             RED[n][0] = RED[n][0] - 20;
         }
-        for (int n = 0; n < 124; n++) {
+        for (int n = 0; n < 46; n++) {
             BLUE[n][0] = BLUE[n][0] - 20;
         }
+		for (int n = 0; n < 32; n++) {
+			YELLOW[n][0] = YELLOW[n][0] - 20;
+		}
 
         c = 0;
         d = 0;
@@ -361,9 +385,8 @@ void moveXY(Mat image, int t1) {
         // resize(image, image, { 500, 500 }, 0, 0, cv::INTER_NEAREST);
         imshow("Image", image);
         waitKey(500);
-    }
-  //  waitKey();
-    destroyWindow("Image");
-//    destroyWindow("Image");
-    return;
-}
+    } 
+    //  waitKey();
+   // destroyWindow("Image");
+        destroyWindow("Image");
+        return; }
