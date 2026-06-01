@@ -12,6 +12,30 @@ using namespace std;
 using namespace cv;
 
 //vector<std::array<int, 2>> RED(37), BLUE(124), YELLOW(32);
+int diff_RED_x[37] = {  
+    0, 0, 0, 0, -2, -2, -2, -2,
+   -2, -2, -2, -2, -7, -5, -5,
+   -5, -5, -5, -1, -5, -5, -5,
+   -1, -1, -1, -3, -3, -3, -1,
+   -1,  0,  0, 0,  1,  0,  0,
+    0,
+
+};
+	
+
+int diff_BLUE_x[46] = { 2, 2, 2, 2, 1, 1, 1, 0, 0,
+                        0, 0, -1, -1, -1, -5, -1, -1, -1,
+                        6, 6, 1, 1, 1, 1, 1, 1, 1, 4, 4,
+                        4, 4, 5, 0, 0, 0, 0, 0, 0, -1, -1,
+                        -1,-1, -1,-1, -1, -1,
+
+};
+int diff_YELLOW_x[32] = { 
+    -4, -4, -3, -3, -4, -3, -4, -3,
+-3, -4, -4, -6, -5, -6, -4, -4,
+0, 0, 0, 0, -3, -3, -3, -3,
+-3, -3, -3, 1, 1, 1, 2, 2,
+};
 int RED[37][2] = {
                     {140,45},
                     {140,46},
@@ -141,27 +165,84 @@ queue<pair<int, int>>future_RED;
 queue<pair<int, int>>future_BLUE;
 queue<pair<int, int>>future_YELLOW;
 void moveXY(Mat path, int shift);
+void scan(Mat path);
 
 int main() {
     cout << "Hello, World!" << endl;
-    cout << "OpenCV version is " << CV_VERSION << endl;
     string imagePath = "C:/Users/yetam/source/repos/OpenCv/OpenCv/Screenshot.png";
     Mat image = imread(imagePath, IMREAD_COLOR);
-    //   for (int i = 0; i < 15; i++)
-     //  {
-    int t1 = 10;
-    moveXY(image, t1);
-    // }
-    /*
-    while (true)
-    {
-        cout << "HELLO" << endl;
-   } */
+  //  scan(image);
+    moveXY(image, 10);
+//    scan(image);
     return 0;
 }
-void moveXY(Mat image, int t1) {
+void scan(Mat path) {
+	 c = 0;
+     d = 0;
+     e = 0;
+    cv::cvtColor(path, path, cv::COLOR_BGR2RGB);
+    printf("DOWN");
+//	outputFile << "COLOR,ROW,COL" << endl; 
+	for (int i = 0; i < path.rows; ++i) {
+		for (int j = 0; j < path.cols; ++j) {
+			Vec3b pix = path.at<Vec3b>(i, j);
+            int r = pix[0], g = pix[1], b = pix[2];
+			cout << r << " " << g << " " << b << endl;
+			if (r == 255 && g == 66 && b == 41)
+			{
+                if (i == RED[c][0] && j == RED[c][1]) {
+                    c++;
 
-    // outputFile.open("C:/Users/yetam/source/repos/OpenCv/OpenCv/output12.csv", ios::out | ios::app);
+                    ofstream outputFile;
+                    outputFile.open("C:/Users/yetam/source/repos/OpenCv/OpenCv/RED_x.csv", ios::out | ios::app);
+                    outputFile << to_string(j) << "," << endl;
+                    outputFile.close();
+
+                }
+
+			}
+			if (r == 82 && g == 33 && b == 222)
+			{
+
+                if (i == BLUE[d][0] && j == BLUE[d][1])
+                {
+                    d++;
+
+
+
+                    ofstream outputFile;
+                    outputFile.open("C:/Users/yetam/source/repos/OpenCv/OpenCv/BLUE_x.csv", ios::out | ios::app);
+                    outputFile << to_string(j) << endl;
+                    outputFile.close();
+                }
+			}
+            if (r == 255 && g == 222 && b == 181)
+            {
+
+                if (i == YELLOW[e][0] && j == YELLOW[e][1])
+                {
+                    e++;
+
+
+
+
+                    ofstream outputFile;
+                    outputFile.open("C:/Users/yetam/source/repos/OpenCv/OpenCv/YELLOW_x.csv", ios::out | ios::app);
+                    outputFile << to_string(j) << endl;
+                    outputFile.close();
+                }
+            }
+		//		outputFile  << "YELLOW:" + i + "," + j << endl;
+			}
+		}
+    return;
+}
+	//outputFile.close();
+
+
+void moveXY(Mat image, int t1) {
+//	ofstream outputFile;
+ //   outputFile.open("C:/Users/yetam/source/repos/OpenCv/OpenCv/opencv31.csv", ios::out | ios::app);
     // outputFile.close();
 
     // resize(image, image, { 500, 500 }, 0, 0, cv::INTER_NEAREST);
@@ -303,7 +384,7 @@ void moveXY(Mat image, int t1) {
                     if (i == RED[c][0] && j == RED[c][1]) {
                         c++;
                         if (i > 0) {
-                            image.at<Vec3b>(i - 20, j) = pix;
+                            image.at<Vec3b>(i - 21, j) = pix;
 
                         }
                     }
@@ -319,7 +400,7 @@ void moveXY(Mat image, int t1) {
                     {
                         d++;
                         if (i > 0) {
-                            image.at<Vec3b>(i - 20, j) = pix;
+                            image.at<Vec3b>(i - 21, j) = pix;
 
                         }
 
@@ -332,7 +413,7 @@ void moveXY(Mat image, int t1) {
                     {
                         e++;
                         if (i > 0) {
-                            image.at<Vec3b>(i - 20, j) = pix;
+                            image.at<Vec3b>(i - 21, j) = pix;
 
                         }
 
@@ -369,13 +450,16 @@ void moveXY(Mat image, int t1) {
         }
 
         for (int n = 0; n < 37; n++) {
-            RED[n][0] = RED[n][0] - 20;
+            RED[n][0] = RED[n][0] - 21;
+		//	outputFile << "RED:" + to_string(RED[n][0]) + "," + to_string(RED[n][1]) << endl;
         }
         for (int n = 0; n < 46; n++) {
-            BLUE[n][0] = BLUE[n][0] - 20;
+            BLUE[n][0] = BLUE[n][0] - 21;
+		//	outputFile << "BLUE:" + to_string(BLUE[n][0]) + "," + to_string(BLUE[n][1]) << endl;
         }
 		for (int n = 0; n < 32; n++) {
-			YELLOW[n][0] = YELLOW[n][0] - 20;
+			YELLOW[n][0] = YELLOW[n][0] - 21;
+		//	outputFile << "YELLOW:" + to_string(YELLOW[n][0]) + "," + to_string(YELLOW[n][1]) << endl;
 		}
 
         c = 0;
@@ -388,5 +472,68 @@ void moveXY(Mat image, int t1) {
     } 
     //  waitKey();
    // destroyWindow("Image");
+//    outputFile.close();
+	Vec3b red[37];
+	Vec3b blue[46];
+	Vec3b yellow[32];
+    
+    for (int k = 0; k < 1; k++) {
+
+        cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+
+        for (int n = 0; n < 37; n++) {
+            if (RED[n][1] < image.cols)
+                red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+            image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+        }
+        for (int n = 0; n < 46; n++) {
+            blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+            image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+            if (n >= 37 && n <= 45)
+            {
+                image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+            }
+
+        }
+        for (int n = 0; n < 32; n++) {
+            if (YELLOW[n][1] < image.cols)
+            {
+                yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+                image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+
+            }
+        }
+        for (int n = 0; n < 37; n++) {
+            RED[n][1] = RED[n][1] + diff_RED_x[n];
+            image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+        }
+        for (int n = 0; n < 46; n++) {
+            BLUE[n][1] = BLUE[n][1] + diff_BLUE_x[n];
+            image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+            if (n >= 37 && n <= 45)
+            {
+                image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+            }
+        }
+        for (int n = 0; n < 32; n++) {
+            YELLOW[n][1] = YELLOW[n][1] + diff_YELLOW_x[n];
+            image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+        }
+
+
+
+
+
+    }
+
+        c = 0;
+        d = 0;
+        e = 0;
+        cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+        // resize(image, image, { 500, 500 }, 0, 0, cv::INTER_NEAREST);
+        imshow("Image", image);
+       waitKey(500);
+   
+
         destroyWindow("Image");
         return; }
