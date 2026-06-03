@@ -162,26 +162,33 @@ int e = 0;
 Vec3b black;
 Vec3b bridge;
 
-void moveXY(Mat path, int shift);
+void play(Mat path, int shift);
 void moveX(Mat path, int shift, int times);
 void moveY(Mat path, int shift, int times);
 void rotate(Mat image, bool direction);
+void display(Mat path, int freq);
 void scan(Mat path);
 
 int main() {
-    cout << "Hello, World!" << endl;
     string imagePath = "C:/Users/yetam/source/repos/OpenCv/OpenCv/Screenshot.png";
     Mat image = imread(imagePath, IMREAD_COLOR);
     //  scan(image);
-    moveXY(image, 10);
+    play(image, 10);
     //    scan(image);
     return 0;
 }
-void display(Mat image) {
+/*
+* Just displaying the image.
+*/
+void display(Mat image, int freq) {
     cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
     imshow("Image", image);
-    waitKey(500);
+    waitKey(freq);
 }
+/*
+*
+* Just moving the pixels with the specific colors in the x direction 
+*/
 void moveX(Mat image, int shift, int times) {
     Vec3b red[37], blue[46], yellow[32];
     for (int i = 0; i < times; i++)
@@ -218,9 +225,13 @@ void moveX(Mat image, int shift, int times) {
      //           YELLOW[n][0] = YELLOW[n][0] - 1;
             image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
         }
-		display(image);
+		display(image,300);
     }
 }
+/*
+*
+* Just moving the pixels with the specific colors in the y direction.
+*/
 void moveY(Mat image, int shift)
 {
 	Vec3b red[37], blue[46], yellow[32];
@@ -252,6 +263,10 @@ void moveY(Mat image, int shift)
 
     }
 }
+/*
+ *  Just moving the pixels with the specific colors in the x direction by the specific amounts to create a rotation effect.
+ *
+ */
 void rotate(Mat image, bool direction)
 {
 	Vec3b red[37], blue[46], yellow[32];
@@ -309,6 +324,12 @@ void rotate(Mat image, bool direction)
 
     }
 }
+/*
+ *
+ *  Just scanning the image and writing the x coordinates of the pixels with the specific colors to csv files.
+ * 
+ * 
+ */
 void scan(Mat path) {
     c = 0;
     d = 0;
@@ -373,46 +394,47 @@ void scan(Mat path) {
 //outputFile.close();
 
 
-void moveXY(Mat image, int t1) {
+void play(Mat image, int t1) {
 
     cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
-    display(image);
+    display(image,300);
     waitKey(500);
-    moveX(image, 15, 10);
+	moveX(image, 15, 10); // move right 15 pixels 10 times
     cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
-    moveY(image, 21);
-    display(image);
-    rotate(image, true);
-    display(image);
-    moveX(image, -15,6);
+	moveY(image, 21);    // move up 21 pixels
+    display(image, 300);
+	rotate(image, true); // rotate right
+    display(image, 300);
+	moveX(image, -15, 6); // move left 15 pixels 6 times
     cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
-    moveY(image, 23);
-    display(image);
-	rotate(image, false);
-    display(image);
-	moveX(image, 15, 1);
+	moveY(image, 23); // move up 23 pixels
+    display(image, 300); 
+	rotate(image, false); // rotate left
+    display(image, 300); 
+	moveX(image, 15, 1); // move right 15 pixels 1 time
     cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
-	moveY(image, 26);
-	display(image);
-	rotate(image, true);
-	display(image);
-	moveX(image, -18, 2);
-    cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
-	moveY(image, 20);
-    display(image);
-    rotate(image, false);
-	display(image);
-	moveX(image, 16, 7);
+	moveY(image, 26); // move up 26 pixels
+	display(image, 300); 
+	rotate(image, true); // rotate right
+	display(image, 300); 
+	moveX(image, -18, 2); // move left 18 pixels 2 times
     cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
 	moveY(image, 20);
-    display(image);
-    rotate(image, true);
-    display(image);
-	moveX(image, -19, 3);
+    display(image, 300); 
+	rotate(image, false); // rotate left
+	display(image, 300); 
+	moveX(image, 16, 7); // move right 16 pixels 7 times
     cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
-	moveY(image, 20);
-    display(image);
-	moveX(image, -15, 2);
+	moveY(image, 20); //   
+    display(image, 300);     
+	rotate(image, true); // rotate right
+    display(image, 300);     
+	moveX(image, -19, 3); // move left 19 pixels 3 times
+    cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+	moveY(image, 20); //    
+    display(image, 300);         
+	moveX(image, -15, 2); // move left 15 pixels 2 times
+	cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
 	//display(image);
     destroyWindow("Image");
     return;
