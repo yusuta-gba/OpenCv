@@ -533,7 +533,560 @@ void moveXY(Mat image, int t1) {
         // resize(image, image, { 500, 500 }, 0, 0, cv::INTER_NEAREST);
         imshow("Image", image);
        waitKey(500);
-   
 
-        destroyWindow("Image");
+       for (int i = 0; i < 6; i++)
+       {
+           cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+           for (int n = 0; n < 37; n++) {
+               red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+               RED[n][1] = RED[n][1] - 15;
+               if(i==0)
+				   RED[n][0] = RED[n][0] - 1; 
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+
+           }
+           for (int n = 0; n < 46; n++) {
+               blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+               if (n >= 37 && n <= 45)
+               {
+                   if (BLUE[n][0] > 0)
+                       image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+               BLUE[n][1] = BLUE[n][1] - 15;
+               if(i==0)
+				   BLUE[n][0] = BLUE[n][0] - 1;
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+
+           }
+           for (int n = 0; n < 32; n++) {
+               yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+               YELLOW[n][1] = YELLOW[n][1] - 15;
+               if(i==0)
+				   YELLOW[n][0] = YELLOW[n][0] - 1;
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+
+           }
+           cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+           imshow("Image", image);
+           waitKey(500);
+       }
+       cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+       for (int n = 0; n < 37; n++) {
+           red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+           image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+               RED[n][0] = RED[n][0] - 23;
+           image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+
+       }
+       for (int n = 0; n < 46; n++) {
+           blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+           image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+           if (n >= 37 && n <= 45)
+           {
+               if (BLUE[n][0] > 0)
+                   image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+           }
+
+               BLUE[n][0] = BLUE[n][0] - 23;
+           image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+
+       }
+       for (int n = 0; n < 32; n++) {
+           yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+           image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+               YELLOW[n][0] = YELLOW[n][0] - 23;
+           image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+
+       }
+       cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+       imshow("Image", image);
+       waitKey(500);
+       for (int k = 0; k < 1; k++) {
+
+           cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+
+           for (int n = 0; n < 37; n++) {
+               if (RED[n][1] < image.cols)
+                   red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+           }
+           for (int n = 0; n < 46; n++) {
+               blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+               if (n >= 37 && n <= 45)
+               {
+                   image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+
+           }
+           for (int n = 0; n < 32; n++) {
+               if (YELLOW[n][1] < image.cols)
+               {
+                   yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+                   image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+
+               }
+           }
+           for (int n = 0; n < 37; n++) {
+               RED[n][1] = RED[n][1] - diff_RED_x[n];
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+           }
+           for (int n = 0; n < 46; n++) {
+               BLUE[n][1] = BLUE[n][1] - diff_BLUE_x[n];
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+               if (n >= 37 && n <= 45)
+               {
+                   image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+           }
+           for (int n = 0; n < 32; n++) {
+               YELLOW[n][1] = YELLOW[n][1] - diff_YELLOW_x[n];
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+           }
+
+       }
+       cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+       imshow("Image", image);
+       waitKey(500);
+       for (int i = 0; i < 1; i++)
+       {
+           cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+           for (int n = 0; n < 37; n++) {
+               red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+               RED[n][1] = RED[n][1] + 15;
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+
+           }
+           for (int n = 0; n < 46; n++) {
+               blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+               if (n >= 37 && n <= 45)
+               {
+                   if (BLUE[n][0] > 0)
+                       image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+               BLUE[n][1] = BLUE[n][1] + 15;
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+
+           }
+           for (int n = 0; n < 32; n++) {
+               yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+               YELLOW[n][1] = YELLOW[n][1] + 15;
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+
+           }
+           cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+           imshow("Image", image);
+           waitKey(500);
+       }
+       cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+       for (int n = 0; n < 37; n++) {
+           red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+           image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+           RED[n][0] = RED[n][0] - 26;
+           image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+
+       }
+       for (int n = 0; n < 46; n++) {
+           blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+           image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+           if (n >= 37 && n <= 45)
+           {
+               if (BLUE[n][0] > 0)
+                   image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+           }
+
+           BLUE[n][0] = BLUE[n][0] - 26;
+           image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+
+       }
+       for (int n = 0; n < 32; n++) {
+           yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+           image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+           YELLOW[n][0] = YELLOW[n][0] - 26;
+           image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+       }
+       cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+       imshow("Image", image);
+       waitKey(500);
+
+       for (int k = 0; k < 1; k++) {
+
+           cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+
+           for (int n = 0; n < 37; n++) {
+               if (RED[n][1] < image.cols)
+                   red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+           }
+           for (int n = 0; n < 46; n++) {
+               blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+               if (n >= 37 && n <= 45)
+               {
+                   image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+
+           }
+           for (int n = 0; n < 32; n++) {
+               if (YELLOW[n][1] < image.cols)
+               {
+                   yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+                   image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+
+               }
+           }
+           for (int n = 0; n < 37; n++) {
+               RED[n][1] = RED[n][1] + diff_RED_x[n];
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+           }
+           for (int n = 0; n < 46; n++) {
+               BLUE[n][1] = BLUE[n][1] + diff_BLUE_x[n];
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+               if (n >= 37 && n <= 45)
+               {
+                   image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+           }
+           for (int n = 0; n < 32; n++) {
+               YELLOW[n][1] = YELLOW[n][1] + diff_YELLOW_x[n];
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+           }
+
+       }
+       cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+       imshow("Image", image);
+       waitKey(500);
+       for (int i = 0; i < 2; i++)
+       {
+           cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+           for (int n = 0; n < 37; n++) {
+               red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+               RED[n][1] = RED[n][1] - 18;
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+
+           }
+           for (int n = 0; n < 46; n++) {
+               blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+               if (n >= 37 && n <= 45)
+               {
+                   if (BLUE[n][0] > 0)
+                       image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+               BLUE[n][1] = BLUE[n][1] - 18;
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+
+           }
+           for (int n = 0; n < 32; n++) {
+               yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+               YELLOW[n][1] = YELLOW[n][1] - 18;
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+
+           }
+           cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+           imshow("Image", image);
+           waitKey(500);
+       }
+       cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+       for (int n = 0; n < 37; n++) {
+           red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+           image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+           RED[n][0] = RED[n][0] - 20;
+           image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+
+       }
+       for (int n = 0; n < 46; n++) {
+           blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+           image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+           if (n >= 37 && n <= 45)
+           {
+               if (BLUE[n][0] > 0)
+                   image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+           }
+
+           BLUE[n][0] = BLUE[n][0] - 20;
+           image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+
+       }
+       for (int n = 0; n < 32; n++) {
+           yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+           image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+           YELLOW[n][0] = YELLOW[n][0] - 20;
+           image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+
+       }
+       cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+       imshow("Image", image);
+       waitKey(500);
+       for (int k = 0; k < 1; k++) {
+
+           cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+
+           for (int n = 0; n < 37; n++) {
+               if (RED[n][1] < image.cols)
+                   red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+           }
+           for (int n = 0; n < 46; n++) {
+               blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+               if (n >= 37 && n <= 45)
+               {
+                   image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+
+           }
+           for (int n = 0; n < 32; n++) {
+               if (YELLOW[n][1] < image.cols)
+               {
+                   yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+                   image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+
+               }
+           }
+           for (int n = 0; n < 37; n++) {
+               RED[n][1] = RED[n][1] - diff_RED_x[n];
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+           }
+           for (int n = 0; n < 46; n++) {
+               BLUE[n][1] = BLUE[n][1] - diff_BLUE_x[n];
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+               if (n >= 37 && n <= 45)
+               {
+                   image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+           }
+           for (int n = 0; n < 32; n++) {
+               YELLOW[n][1] = YELLOW[n][1] - diff_YELLOW_x[n];
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+           }
+
+       }
+       cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+       imshow("Image", image);
+       waitKey(500);
+       for (int i = 0; i < 7; i++)
+       {
+           cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+           for (int n = 0; n < 37; n++) {
+               red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+               RED[n][1] = RED[n][1] + 16;
+           
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+
+           }
+           for (int n = 0; n < 46; n++) {
+               blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+               if (n >= 37 && n <= 45)
+               {
+                   if (BLUE[n][0] > 0)
+                       image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+               BLUE[n][1] = BLUE[n][1] + 16;
+         
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+
+           }
+           for (int n = 0; n < 32; n++) {
+               yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+               YELLOW[n][1] = YELLOW[n][1] + 16;
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+
+           }
+           cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+           imshow("Image", image);
+           waitKey(500);
+       }
+       cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+       for (int n = 0; n < 37; n++) {
+           red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+           image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+           RED[n][0] = RED[n][0] - 20;
+           image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+
+       }
+       for (int n = 0; n < 46; n++) {
+           blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+           image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+           if (n >= 37 && n <= 45)
+           {
+               if (BLUE[n][0] > 0)
+                   image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+           }
+
+           BLUE[n][0] = BLUE[n][0] - 20;
+           image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+
+       }
+       for (int n = 0; n < 32; n++) {
+           yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+           image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+           YELLOW[n][0] = YELLOW[n][0] - 20;
+           image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+
+       }
+       cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+       imshow("Image", image);
+       waitKey(500);
+       for (int k = 0; k < 1; k++) {
+
+           cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+
+           for (int n = 0; n < 37; n++) {
+               if (RED[n][1] < image.cols)
+                   red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+           }
+           for (int n = 0; n < 46; n++) {
+               blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+               if (n >= 37 && n <= 45)
+               {
+                   image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+
+           }
+           for (int n = 0; n < 32; n++) {
+               if (YELLOW[n][1] < image.cols)
+               {
+                   yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+                   image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+
+               }
+           }
+           for (int n = 0; n < 37; n++) {
+               RED[n][1] = RED[n][1] + diff_RED_x[n];
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+           }
+           for (int n = 0; n < 46; n++) {
+               BLUE[n][1] = BLUE[n][1] + diff_BLUE_x[n];
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+               if (n >= 37 && n <= 45)
+               {
+                   image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+           }
+           for (int n = 0; n < 32; n++) {
+               YELLOW[n][1] = YELLOW[n][1] + diff_YELLOW_x[n];
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+           }
+
+       }
+       cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+       imshow("Image", image);
+       waitKey(500);
+       for (int i = 0; i < 3; i++)
+       {
+           cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+           for (int n = 0; n < 37; n++) {
+               red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+               RED[n][1] = RED[n][1] - 19;
+
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+
+           }
+           for (int n = 0; n < 46; n++) {
+               blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+               if (n >= 37 && n <= 45)
+               {
+                   if (BLUE[n][0] > 0)
+                       image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+               BLUE[n][1] = BLUE[n][1] - 19;
+
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+
+           }
+           for (int n = 0; n < 32; n++) {
+               yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+               YELLOW[n][1] = YELLOW[n][1] - 19;
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+
+           }
+           cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+           imshow("Image", image);
+           waitKey(500);
+       }
+       cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+       for (int n = 0; n < 37; n++) {
+           red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+           image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+           RED[n][0] = RED[n][0] - 20;
+           image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+
+       }
+       for (int n = 0; n < 46; n++) {
+           blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+           image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+           if (n >= 37 && n <= 45)
+           {
+               if (BLUE[n][0] > 0)
+                   image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+           }
+
+           BLUE[n][0] = BLUE[n][0] - 20;
+           image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+
+       }
+       for (int n = 0; n < 32; n++) {
+           yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+           image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+           YELLOW[n][0] = YELLOW[n][0] - 20;
+           image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+
+       }
+       cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+       imshow("Image", image);
+       waitKey(500);
+
+       for (int i = 0; i < 2; i++)
+       {
+           cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+           for (int n = 0; n < 37; n++) {
+               red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+               RED[n][1] = RED[n][1] - 15;
+
+               image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
+
+           }
+           for (int n = 0; n < 46; n++) {
+               blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+               if (n >= 37 && n <= 45)
+               {
+                   if (BLUE[n][0] > 0)
+                       image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
+               }
+               BLUE[n][1] = BLUE[n][1] - 15;
+
+               image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
+
+           }
+           for (int n = 0; n < 32; n++) {
+               yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+               YELLOW[n][1] = YELLOW[n][1] - 15;
+               image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
+
+           }
+           cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
+           imshow("Image", image);
+           waitKey(500);
+       }
+           destroyWindow("Image");
         return; }
