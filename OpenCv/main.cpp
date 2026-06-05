@@ -161,14 +161,14 @@ int d = 0;
 int e = 0;
 Vec3b black;
 Vec3b bridge;
-
+bool climb = false;
 void play(Mat path, int shift);
 void moveX(Mat path, int shift, int times);
 void moveY(Mat path, int shift, int times);
 void rotate(Mat image, bool direction);
 void display(Mat path, int freq);
 void scan(Mat path);
-
+void getDeletor();
 int main() {
     string imagePath = "C:/Users/yetam/source/repos/OpenCv/OpenCv/Screenshot.png";
     Mat image = imread(imagePath, IMREAD_COLOR);
@@ -191,6 +191,7 @@ void display(Mat image, int freq) {
 */
 void moveX(Mat image, int shift, int times) {
     Vec3b red[37], blue[46], yellow[32];
+    bridge = Vec3b(255, 66, 107);
     for (int i = 0; i < times; i++)
     {
         cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
@@ -198,8 +199,8 @@ void moveX(Mat image, int shift, int times) {
             red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
             image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
             RED[n][1] = RED[n][1] + shift;
-       //     if (i == 0)
-        //        RED[n][0] = RED[n][0] - 1;
+        //    if(climb)
+         //       RED[n][0] = RED[n][0] - 1;
             image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
 
         }
@@ -212,8 +213,8 @@ void moveX(Mat image, int shift, int times) {
                     image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = bridge;
             }
             BLUE[n][1] = BLUE[n][1] + shift;
-       //     if (i == 0)
-         //       BLUE[n][0] = BLUE[n][0] - 1;
+         //   if (climb)
+          //      BLUE[n][0] = BLUE[n][0] - 1;
             image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = blue[n];
 
         }
@@ -221,8 +222,8 @@ void moveX(Mat image, int shift, int times) {
             yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
             image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
             YELLOW[n][1] = YELLOW[n][1] + shift;
-     //       if (i == 0)
-     //           YELLOW[n][0] = YELLOW[n][0] - 1;
+         //   if (climb)
+         //       YELLOW[n][0] = YELLOW[n][0] - 1;
             image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
         }
 		display(image,300);
@@ -234,6 +235,7 @@ void moveX(Mat image, int shift, int times) {
 */
 void moveY(Mat image, int shift)
 {
+
 	Vec3b red[37], blue[46], yellow[32];
     for (int n = 0; n < 37; n++) {
         red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
@@ -262,6 +264,7 @@ void moveY(Mat image, int shift)
         image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
 
     }
+    climb = true;
 }
 /*
  *  Just moving the pixels with the specific colors in the x direction by the specific amounts to create a rotation effect.
@@ -270,6 +273,7 @@ void moveY(Mat image, int shift)
 void rotate(Mat image, bool direction)
 {
 	Vec3b red[37], blue[46], yellow[32];
+    bridge = Vec3b(255, 66, 107);
     for (int k = 0; k < 1; k++) {
 
         cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
@@ -439,3 +443,8 @@ void play(Mat image, int t1) {
     destroyWindow("Image");
     return;
 }
+
+
+	
+	
+
