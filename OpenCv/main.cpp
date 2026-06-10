@@ -161,6 +161,11 @@ int d = 0;
 int e = 0;
 Vec3b black;
 Vec3b bridge;
+Vec3b futureBox1[37], futureBox2[46], futureBox3[32];
+bool firstMV_R = true;
+bool firstMV_B = true;
+bool firstMV_Y = true;
+bool firstMV_LADDER = true;
 bool climb = false;
 void play(Mat path, int shift);
 void moveX(Mat path, int shift, int times);
@@ -197,7 +202,17 @@ void moveX(Mat image, int shift, int times) {
         cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
         for (int n = 0; n < 37; n++) {
             red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
-            image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+
+            if (!firstMV_R)
+            {
+				image.at<Vec3b>(RED[n][0], RED[n][1]) = futureBox1[n];
+            }
+            else
+            {
+                image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+				firstMV_R = false;
+            }
+            futureBox1[n] = image.at<Vec3b>(RED[n][0], RED[n][1] + shift);
             RED[n][1] = RED[n][1] + shift;
         //    if(climb)
          //       RED[n][0] = RED[n][0] - 1;
@@ -206,7 +221,17 @@ void moveX(Mat image, int shift, int times) {
         }
         for (int n = 0; n < 46; n++) {
             blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
-            image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+           
+            if (!firstMV_B)
+            {
+				image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = futureBox2[n];
+            }
+            else
+            {
+                image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+                firstMV_B = false;
+            }
+            futureBox2[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1] + shift);
             if (n >= 37 && n <= 45)
             {
                 if (BLUE[n][0] > 0)
@@ -220,7 +245,17 @@ void moveX(Mat image, int shift, int times) {
         }
         for (int n = 0; n < 32; n++) {
             yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
-            image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+            
+            if (!firstMV_Y)
+            {
+				image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = futureBox3[n];
+            }
+            else
+            {
+                image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+                firstMV_Y = false;
+            }
+            futureBox3[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1] + shift);
             YELLOW[n][1] = YELLOW[n][1] + shift;
          //   if (climb)
          //       YELLOW[n][0] = YELLOW[n][0] - 1;
