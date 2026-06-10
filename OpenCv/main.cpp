@@ -277,7 +277,17 @@ void moveY(Mat image, int shift)
 	Vec3b red[37], blue[46], yellow[32];
     for (int n = 0; n < 37; n++) {
         red[n] = image.at<Vec3b>(RED[n][0], RED[n][1]);
-        image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+        if (!firstMV_R)
+        {
+            image.at<Vec3b>(RED[n][0], RED[n][1]) = futureBox1[n];
+        }
+        else
+        {
+            image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
+            if (n == 36)
+                firstMV_R = false;
+        }
+        //image.at<Vec3b>(RED[n][0], RED[n][1]) = black;
         
         RED[n][0] = RED[n][0] - shift;
         image.at<Vec3b>(RED[n][0], RED[n][1]) = red[n];
@@ -285,8 +295,16 @@ void moveY(Mat image, int shift)
     }
     for (int n = 0; n < 46; n++) {
         blue[n] = image.at<Vec3b>(BLUE[n][0], BLUE[n][1]);
-		
-        image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+        if (!firstMV_B)
+        {
+            image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = futureBox2[n];
+        }
+        else
+        {
+            image.at<Vec3b>(BLUE[n][0], BLUE[n][1]) = black;
+            if (n == 45)
+                firstMV_B = false;
+        }
         if (n >= 37 && n <= 45)
         {
             if (BLUE[n][0] > 0)
@@ -299,8 +317,17 @@ void moveY(Mat image, int shift)
     }
     for (int n = 0; n < 32; n++) {
         yellow[n] = image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]);
-		
-        image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+        if (!firstMV_Y)
+        {
+            image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = futureBox3[n];
+        }
+        else
+        {
+            image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
+            if (n == 31)
+                firstMV_Y = false;
+        }
+       // image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = black;
         YELLOW[n][0] = YELLOW[n][0] -  shift;
         image.at<Vec3b>(YELLOW[n][0], YELLOW[n][1]) = yellow[n];
 
