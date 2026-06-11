@@ -156,18 +156,22 @@ int YELLOW[32][2] = {
 {149,47},
 {150,45},
 {150, 46} };
+int maximumSpace[115][2];
 int c = 0;
 int d = 0;
 int e = 0;
 Vec3b black;
 Vec3b bridge;
 Vec3b futureBox1[37], futureBox2[46], futureBox3[32];
+Vec3b temp[115];
 bool firstMV_R = true;
 bool firstMV_B = true;
 bool firstMV_Y = true;
 bool firstMV_LADDER = true;
 bool climb = false;
+void maximum();
 void play(Mat path, int shift);
+void play2(Mat path, int shift);
 void moveX(Mat path, int shift, int times);
 void moveY(Mat path, int shift, int times);
 void rotate(Mat image, bool direction);
@@ -178,13 +182,32 @@ int main() {
     string imagePath = "C:/Users/yetam/source/repos/OpenCv/OpenCv/Screenshot.png";
     Mat image = imread(imagePath, IMREAD_COLOR);
     //  scan(image);
-    play(image, 10);
+    maximum();
+    play2(image, 10);
     //    scan(image);
+   
     return 0;
 }
 /*
 * Just displaying the image.
 */
+void moveX2(Mat image, int shift, int times)
+{
+  
+    for (int j = 0; j < times; j++)
+    {
+        cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+        for (int i = 0; i < 115; i++)
+        {
+            temp[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
+            image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
+            image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0] + shift) = temp[i];
+            maximumSpace[i][0] = maximumSpace[i][0] + shift;
+        }
+        display(image, 50);
+    }
+    
+}
 void display(Mat image, int freq) {
     cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
     imshow("Image", image);
@@ -514,8 +537,72 @@ void play(Mat image, int t1) {
     destroyWindow("Image");
     return;
 }
+void play2(Mat image, int shift)
+{
+    cout << "PLAY GOING ON" << endl;
+    cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+    display(image, 300);
+    waitKey(100);
+    for (int i = 0; i < 30; i++)
+    {
+        moveX2(image, 5, 1); // move right 15 pixels 10 times
+     //   cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+    }
+}
+void maximum() {
 
+    int globalCounter = 0;
+    for (int i = 0; i < 37; i++)
+    {
+        maximumSpace[globalCounter++][0] = RED[i][1];
+        maximumSpace[globalCounter - 1][1] = RED[i][0];
+    }
+    for (int i = 0; i < 46; i++)
+    {
+        maximumSpace[globalCounter++][0] = BLUE[i][1];
+        maximumSpace[globalCounter - 1][1] = BLUE[i][0];
+    }
+    for (int i = 0; i < 32; i++)
+    {
+        maximumSpace[globalCounter++][0] = YELLOW[i][1];
+        maximumSpace[globalCounter - 1][1] = YELLOW[i][0];
+    }
+ 
+    while (true)
+    {
+        int counter = 0;
+        bool breakFlag = false;
+        for (int i = 0; i < 115; i++)
+        {
+            if (maximumSpace[i][0] < maximumSpace[i + 1][0])
+            {
+                int temp = maximumSpace[i +1][0];
+                maximumSpace[i + 1][0] = maximumSpace[i][0];
+                maximumSpace[i][0] = temp;
+                int temp2 = maximumSpace[i + 1][1];
+                maximumSpace[i + 1][1] = maximumSpace[i][1];
+                maximumSpace[i][1] = temp2;
 
+            }
+            else 
+            {
+                counter++;
+                if (counter == 114)
+                {
+                    breakFlag = true;
+                }
+            }
+      
+        }
+        if (breakFlag == true)
+        {
+            break;
+        }
+    }
+
+    
+   
+}
 	
 	
 
