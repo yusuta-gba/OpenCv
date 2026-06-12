@@ -223,26 +223,27 @@ void moveX2(Mat image, int shift, int times)
 }
 void moveY2(Mat image, int shift, int times)
 {
-    for (int j = 0; j < 1; j++)
+    int maximumSpace2[115];
+    Vec3b temp2[115];
+    for (int j = 0; j < 21; j++)
     {
         cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
         for (int i = 0; i < 115; i++)
         {
-            temp[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
-         //  if (first_MAXIMUM)
-         //   {
-        //        image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
-        //    }
-         //   else
-        //  {
-               image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = futureBox4[i];
-       //    }
-        //   futureBox4[i] = image.at<Vec3b>(maximumSpace[i][1] - 3, maximumSpace[i][0]);
-            image.at<Vec3b>(maximumSpace[i][1] - 21, maximumSpace[i][0]) = temp[i];
-            maximumSpace[i][1] = maximumSpace[i][1] - 21;
+            maximumSpace2[i] = maximumSpace[i][1];
+            temp2[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
         }
-
-       first_MAXIMUM = false;
+        for (int i = 0; i < 115; i++)
+        {
+            image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
+            maximumSpace[i][1] = maximumSpace[i][1] - 1;
+            
+        }
+        for (int i = 0; i < 115; i++)
+        {
+            image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = temp2[i];
+        }
+      // first_MAXIMUM = false;
         display(image, 50);
     }
 
