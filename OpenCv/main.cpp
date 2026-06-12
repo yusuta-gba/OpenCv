@@ -164,10 +164,12 @@ Vec3b black;
 Vec3b bridge;
 Vec3b futureBox1[37], futureBox2[46], futureBox3[32];
 Vec3b temp[115];
+Vec3b futureBox4[115];
 bool firstMV_R = true;
 bool firstMV_B = true;
 bool firstMV_Y = true;
 bool firstMV_LADDER = true;
+bool first_MAXIMUM = true;
 bool climb = false;
 void maximum();
 void play(Mat path, int shift);
@@ -200,10 +202,20 @@ void moveX2(Mat image, int shift, int times)
         for (int i = 0; i < 115; i++)
         {
             temp[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
-            image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
+            if (first_MAXIMUM)
+            {
+                image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
+            }
+            else
+            {
+                image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = futureBox4[i];
+            }
+            futureBox4[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0] + shift);
             image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0] + shift) = temp[i];
             maximumSpace[i][0] = maximumSpace[i][0] + shift;
         }
+        
+        first_MAXIMUM = false;
         display(image, 50);
     }
     
@@ -543,11 +555,9 @@ void play2(Mat image, int shift)
     cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
     display(image, 300);
     waitKey(100);
-    for (int i = 0; i < 30; i++)
-    {
-        moveX2(image, 5, 1); // move right 15 pixels 10 times
-     //   cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
-    }
+    moveX2(image, 5, 30); // move right 5 pixels 30 times
+
+   
 }
 void maximum() {
 
