@@ -217,7 +217,7 @@ void moveX2(Mat image, int shift, int times)
         }
         
         first_MAXIMUM = false;
-        display(image, 50);
+        display(image, 1);
     }
     
 }
@@ -231,11 +231,11 @@ void moveY2(Mat image, int shift, int times)
             temp[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
          //  if (first_MAXIMUM)
          //   {
-                image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
+        //        image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
         //    }
          //   else
         //  {
-        //       image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = futureBox4[i];
+               image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = futureBox4[i];
        //    }
         //   futureBox4[i] = image.at<Vec3b>(maximumSpace[i][1] - 3, maximumSpace[i][0]);
             image.at<Vec3b>(maximumSpace[i][1] - 21, maximumSpace[i][0]) = temp[i];
@@ -582,7 +582,7 @@ void play2(Mat image, int shift)
     cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
     display(image, 300);
     waitKey(100);
-    moveX2(image, 5, 30); // move right 5 pixels 30 times
+    moveX2(image, 1, 150); // move right 5 pixels 30 times
    // cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
     maximum(false, true, false);
     moveY2(image, 6, 4);    // move up 21 pixels
