@@ -232,7 +232,7 @@ void backwards(Mat image)
        
      
             first_backwards = false;
-     //   display(image, 1);
+            cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
     }
 
 
@@ -267,7 +267,7 @@ void moveX2(Mat image, int shift, int times, bool climb)
             }
 
             first_MAXIMUM = false;
-            if(climb==false)
+            
             display(image, 1);
         }
     
@@ -310,9 +310,10 @@ void moveY2(Mat image, int shift, int times, bool climb)
         {
             image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = temp2[i];
         }
+        cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
       // first_MAXIMUM = false;
        // if(climb != false)
-      //  display(image, 1);
+       // display(image, 1);
      //   maximum(true, false, false);
       //  moveX2(image, 1, 12, true);
       //  backwards(image);
@@ -657,20 +658,16 @@ void play2(Mat image, int shift)
     cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
     display(image, 300);
     waitKey(100);
-    moveX2(image, 1, 150, false); // move right 5 pixels 30 times
-    //moveY2(image, 6, 4);
+    moveX2(image, 1, 150, false); 
     backwards(image);
     for (int i = 0; i < 20; i++)
     {
         moveY2(image, 1, 1, true);
         moveX2(image, 1, 12,true);
-        display(image, 1);
         backwards(image);
     }
-          // cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+         
 
-         // moveY2(image, 6, 4);    // move up 21 pixels
-         // display(image, 300);
         while (true);
    
    
