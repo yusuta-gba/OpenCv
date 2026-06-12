@@ -171,7 +171,7 @@ bool firstMV_Y = true;
 bool firstMV_LADDER = true;
 bool first_MAXIMUM = true;
 bool climb = false;
-void maximum();
+void maximum(bool x, bool y, bool init);
 void play(Mat path, int shift);
 void play2(Mat path, int shift);
 void moveX(Mat path, int shift, int times);
@@ -184,7 +184,7 @@ int main() {
     string imagePath = "C:/Users/yetam/source/repos/OpenCv/OpenCv/Screenshot.png";
     Mat image = imread(imagePath, IMREAD_COLOR);
     //  scan(image);
-    maximum();
+    maximum(true,false, true);
     play2(image, 10);
     //    scan(image);
    
@@ -210,15 +210,42 @@ void moveX2(Mat image, int shift, int times)
             {
                 image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = futureBox4[i];
             }
-            futureBox4[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0] + shift);
-            image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0] + shift) = temp[i];
             maximumSpace[i][0] = maximumSpace[i][0] + shift;
+            futureBox4[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
+            image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = temp[i];
+           
         }
         
         first_MAXIMUM = false;
         display(image, 50);
     }
     
+}
+void moveY2(Mat image, int shift, int times)
+{
+    for (int j = 0; j < 1; j++)
+    {
+        cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+        for (int i = 0; i < 115; i++)
+        {
+            temp[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
+         //  if (first_MAXIMUM)
+         //   {
+                image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
+        //    }
+         //   else
+        //  {
+        //       image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = futureBox4[i];
+       //    }
+        //   futureBox4[i] = image.at<Vec3b>(maximumSpace[i][1] - 3, maximumSpace[i][0]);
+            image.at<Vec3b>(maximumSpace[i][1] - 21, maximumSpace[i][0]) = temp[i];
+            maximumSpace[i][1] = maximumSpace[i][1] - 21;
+        }
+
+       first_MAXIMUM = false;
+        display(image, 50);
+    }
+
 }
 void display(Mat image, int freq) {
     cv::cvtColor(image, image, cv::COLOR_RGB2BGR);
@@ -556,61 +583,111 @@ void play2(Mat image, int shift)
     display(image, 300);
     waitKey(100);
     moveX2(image, 5, 30); // move right 5 pixels 30 times
-
-   
-}
-void maximum() {
-
-    int globalCounter = 0;
-    for (int i = 0; i < 37; i++)
-    {
-        maximumSpace[globalCounter++][0] = RED[i][1];
-        maximumSpace[globalCounter - 1][1] = RED[i][0];
-    }
-    for (int i = 0; i < 46; i++)
-    {
-        maximumSpace[globalCounter++][0] = BLUE[i][1];
-        maximumSpace[globalCounter - 1][1] = BLUE[i][0];
-    }
-    for (int i = 0; i < 32; i++)
-    {
-        maximumSpace[globalCounter++][0] = YELLOW[i][1];
-        maximumSpace[globalCounter - 1][1] = YELLOW[i][0];
-    }
- 
+   // cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+    maximum(false, true, false);
+    moveY2(image, 6, 4);    // move up 21 pixels
+   // display(image, 300);
     while (true)
     {
-        int counter = 0;
-        bool breakFlag = false;
-        for (int i = 0; i < 115; i++)
+
+    }
+   
+}
+void maximum(bool x, bool y, bool initialize) {
+
+    int globalCounter = 0;
+    if (initialize)
+    {
+        for (int i = 0; i < 37; i++)
         {
-            if (maximumSpace[i][0] < maximumSpace[i + 1][0])
+            maximumSpace[globalCounter++][0] = RED[i][1];
+            maximumSpace[globalCounter - 1][1] = RED[i][0];
+        }
+        for (int i = 0; i < 46; i++)
+        {
+            maximumSpace[globalCounter++][0] = BLUE[i][1];
+            maximumSpace[globalCounter - 1][1] = BLUE[i][0];
+        }
+        for (int i = 0; i < 32; i++)
+        {
+            maximumSpace[globalCounter++][0] = YELLOW[i][1];
+            maximumSpace[globalCounter - 1][1] = YELLOW[i][0];
+        }
+    }
+    while (true)
+    {
+        if (x == true)
+        {
+            int counter = 0;
+            bool breakFlag = false;
+            for (int i = 0; i < 115; i++)
             {
-                int temp = maximumSpace[i +1][0];
-                maximumSpace[i + 1][0] = maximumSpace[i][0];
-                maximumSpace[i][0] = temp;
-                int temp2 = maximumSpace[i + 1][1];
-                maximumSpace[i + 1][1] = maximumSpace[i][1];
-                maximumSpace[i][1] = temp2;
+                if (maximumSpace[i][0] < maximumSpace[i + 1][0])
+                {
+                    int temp = maximumSpace[i + 1][0];
+                    maximumSpace[i + 1][0] = maximumSpace[i][0];
+                    maximumSpace[i][0] = temp;
+                    int temp2 = maximumSpace[i + 1][1];
+                    maximumSpace[i + 1][1] = maximumSpace[i][1];
+                    maximumSpace[i][1] = temp2;
+
+                }
+                else
+                {
+                    counter++;
+                    if (counter == 114)
+                    {
+                        breakFlag = true;
+                    }
+                }
 
             }
-            else 
+            if (breakFlag == true)
             {
-                counter++;
-                if (counter == 114)
-                {
-                    breakFlag = true;
-                }
+                break;
             }
-      
         }
-        if (breakFlag == true)
+        else if(y == true)
         {
-            break;
+            int counter = 0;
+            bool breakFlag = false;
+            for (int i = 0; i < 115; i++)
+            {
+                if (maximumSpace[i][1] < maximumSpace[i + 1][1])
+                {
+                    int temp = maximumSpace[i + 1][1];
+                    maximumSpace[i + 1][1] = maximumSpace[i][1];
+                    maximumSpace[i][1] = temp;
+                    int temp2 = maximumSpace[i + 1][0];
+                    maximumSpace[i + 1][0] = maximumSpace[i][0];
+                    maximumSpace[i][0] = temp2;
+
+                }
+                else
+                {
+                    counter++;
+                    if (counter == 114)
+                    {
+                        breakFlag = true;
+                    }
+                }
+
+            }
+            if (breakFlag == true)
+            {
+                break;
+            }
         }
     }
 
-    
+    if (y == true)
+    {
+        for (int i = 0; i < 115; i++)
+        {
+            cout << i << ". " << maximumSpace[i][1] << endl;
+        }
+     
+    }
    
 }
 	
