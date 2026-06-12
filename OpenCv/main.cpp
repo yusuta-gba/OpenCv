@@ -232,7 +232,7 @@ void backwards(Mat image)
        
      
             first_backwards = false;
-        display(image, 1);
+     //   display(image, 1);
     }
 
 
@@ -267,7 +267,7 @@ void moveX2(Mat image, int shift, int times, bool climb)
             }
 
             first_MAXIMUM = false;
-            
+            if(climb==false)
             display(image, 1);
         }
     
@@ -311,8 +311,8 @@ void moveY2(Mat image, int shift, int times, bool climb)
             image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = temp2[i];
         }
       // first_MAXIMUM = false;
-        if(climb != false)
-        display(image, 1);
+       // if(climb != false)
+      //  display(image, 1);
      //   maximum(true, false, false);
       //  moveX2(image, 1, 12, true);
       //  backwards(image);
@@ -664,6 +664,7 @@ void play2(Mat image, int shift)
     {
         moveY2(image, 1, 1, true);
         moveX2(image, 1, 12,true);
+        display(image, 1);
         backwards(image);
     }
           // cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
