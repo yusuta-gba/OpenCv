@@ -663,7 +663,7 @@ void play2(Mat image, int shift)
     for (int i = 0; i < 20; i++)
     {
         moveY2(image, 1, 1, true);
-        moveX2(image, 1, 12,true);
+        moveX2(image, 12, 1,true);
         backwards(image);
     }
          
