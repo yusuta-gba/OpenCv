@@ -308,18 +308,39 @@ void rotateCap(Mat image)
         maximumSpace[i][0] = min - counter;
         counter++;
     }
-    for (int i = 13; i > 6; i--)
+   
+    for (int i = 13; i > 9; i--)
     {
-        maximumSpace[i][0] = min - counter;
+        if (i == 12)
+        {
+            maximumSpace[i][1] = maximumSpace[i][1] - 1;
+            continue;
+        }
+        maximumSpace[i][0] = min - counter + 8;
         counter++;
     }
-    counter = 3;
-    for (int i = 6; i >= 0; i--)
+    counter++;
+    counter++;
+    for (int i = 9; i > 6; i--)
+    {
+        maximumSpace[i][0] = min - counter + 8;
+        counter++;
+    }
+
+
+       counter = 3;
+    for (int i = 6; i >= 3; i--)
     {
         maximumSpace[i][0] = min - counter;
         counter++;
     }
       
+    for (int i = 2; i >= 0; i--)
+    {
+        maximumSpace[i][0] = min - counter - 2;
+        counter++;
+    }
+
     for (int k = 0; k < 115; k++)
     {
         image.at<Vec3b>(maximumSpace[k][1], maximumSpace[k][0]) = temp3[k];
