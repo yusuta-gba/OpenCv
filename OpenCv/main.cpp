@@ -226,75 +226,84 @@ void rotateCap(Mat image)
             index = i;
         }
     }
-    int counter = 3;
+    int counter = 1;
     for (int i = 114; i >= 111; i--)
     {
-        maximumSpace[i][0] = min - counter;
+        maximumSpace[i][0] = min - counter - 3;
         counter++;
     }
-    counter = 5;
+    maximumSpace[110][0] = min -3;
+    counter = 1;
     for (int i = 109; i >= 103; i--)
     {
-        maximumSpace[i][0] = min - counter;
+        maximumSpace[i][0] = min - counter - 3;
         counter++;
     }
-    counter = 2;
+    counter = 3;
     for (int i = 102; i >= 97; i--)
     {
         maximumSpace[i][0] = min - counter;
         counter++;
     }
     counter = 3;
-    for (int i = 96; i > 87; i--)
+    for (int i = 96; i >= 87; i--)
     {
-        maximumSpace[i][0] = min - counter;
+        maximumSpace[i][0] = min - counter + 1;
         counter++;
     }
     counter = 3;
     for (int i = 86; i > 75; i--)
     {
-        maximumSpace[i][0] = min - counter;
+      
+        maximumSpace[i][0] = min - counter + 1;
         counter++;
     }
 
     counter = 3;
     for (int i = 75; i > 64; i--)
     {
-        maximumSpace[i][0] = min - counter;
+        maximumSpace[i][0] = min - counter + 1 + 1;
         counter++;
     }
     counter = 4;
     for (int i = 64; i > 55; i--)
     {
-        maximumSpace[i][0] = min - counter;
+        maximumSpace[i][0] = min - counter + 1 + 1;
         counter++;
     }
     counter = 3;
     for (int i = 55; i > 47; i--)
     {
-        maximumSpace[i][0] = min - counter;
+        maximumSpace[i][0] = min - counter + 1;
         counter++;
     }
     counter = 3;
     for (int i = 47; i > 38; i--)
     {
-        maximumSpace[i][0] = min - counter;
+        maximumSpace[i][0] = min - counter + 1;
         counter++;
     }
     counter = 3;
     for (int i = 38; i > 29; i--)
     {
-        maximumSpace[i][0] = min - counter;
+        maximumSpace[i][0] = min - counter + 1;
         counter++;
     }
     counter = 3;
     for (int i = 29; i > 20; i--)
     {
-        maximumSpace[i][0] = min - counter;
+        maximumSpace[i][0] = min - counter + 1;
         counter++;
     }
     counter = 3;
-    for (int i = 20; i > 13; i--)
+    
+    for (int i = 20; i > 16; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    } 
+    counter++;
+    for (int i = 16; i > 13; i--)
     {
         maximumSpace[i][0] = min - counter;
         counter++;
