@@ -182,6 +182,7 @@ void moveX(Mat path, int shift, int times);
 void moveY(Mat path, int shift, int times);
 void backwards(Mat path, int shift, int times);
 void rotate(Mat image, bool direction);
+void rotate2(Mat image);
 void display(Mat path, int freq);
 void scan(Mat path);
 void getDeletor();
@@ -198,6 +199,124 @@ int main() {
 /*
 * Just displaying the image.
 */
+void rotateCap(Mat image)
+{
+
+    maximum(false, true, false);
+    int min = maximumSpace[114][0];
+    int index = -1;
+    Vec3b temp3[115];
+    cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+    for (int k = 0; k < 115; k++)
+    {
+        temp3[k] = image.at<Vec3b>(maximumSpace[k][1], maximumSpace[k][0]);
+    }
+    for (int i = 114; i >= 0; i--)
+    {
+        ofstream outputFile;
+        outputFile.open("C:/Users/yetam/source/repos/OpenCv/OpenCv/coordinate.csv", ios::out | ios::app);
+        outputFile << "index: " << i << " x: " << maximumSpace[i][0] << " y: " << maximumSpace[i][1] << endl;
+        outputFile.close();       
+    }
+    for (int i = 114; i >= 103; i--)
+    {
+        if (maximumSpace[i][0] < min)
+        {
+            min = maximumSpace[i][0];
+            index = i;
+        }
+    }
+    int counter = 3;
+    for (int i = 114; i >= 111; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+    counter = 5;
+    for (int i = 109; i >= 103; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+    counter = 2;
+    for (int i = 102; i >= 97; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+    counter = 3;
+    for (int i = 96; i > 87; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+    counter = 3;
+    for (int i = 86; i > 75; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+
+    counter = 3;
+    for (int i = 75; i > 64; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+    counter = 4;
+    for (int i = 64; i > 55; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+    counter = 3;
+    for (int i = 55; i > 47; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+    counter = 3;
+    for (int i = 47; i > 38; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+    counter = 3;
+    for (int i = 38; i > 29; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+    counter = 3;
+    for (int i = 29; i > 20; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+    counter = 3;
+    for (int i = 20; i > 13; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+    for (int i = 13; i > 6; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+    counter = 3;
+    for (int i = 6; i >= 0; i--)
+    {
+        maximumSpace[i][0] = min - counter;
+        counter++;
+    }
+      
+    for (int k = 0; k < 115; k++)
+    {
+        image.at<Vec3b>(maximumSpace[k][1], maximumSpace[k][0]) = temp3[k];
+    }
+    display(image, 50);
+}
 void backwards(Mat image)
 {
     Vec3b temp3[115];
@@ -657,7 +776,7 @@ void play2(Mat image, int shift)
     cout << "PLAY GOING ON" << endl;
     cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
     display(image, 300);
-    waitKey(100);
+ //   waitKey(20000);
     moveX2(image, 1, 150, false); 
     backwards(image);
     for (int i = 0; i < 20; i++)
@@ -666,7 +785,7 @@ void play2(Mat image, int shift)
         moveX2(image, 12, 1,true);
         backwards(image);
     }
-         
+    rotateCap(image);
 
         while (true);
    
