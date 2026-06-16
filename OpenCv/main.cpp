@@ -329,7 +329,7 @@ void rotateCap(Mat image)
 
 
        counter = 3;
-    for (int i = 6; i >= 3; i--)
+    for (int i = 7; i >= 3; i--)
     {
         maximumSpace[i][0] = min - counter;
         counter++;
