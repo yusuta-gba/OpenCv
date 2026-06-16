@@ -214,7 +214,7 @@ void rotateCap(Mat image)
     for (int i = 114; i >= 0; i--)
     {
         ofstream outputFile;
-        outputFile.open("C:/Users/yetam/source/repos/OpenCv/OpenCv/coordinate.csv", ios::out | ios::app);
+        outputFile.open("C:/Users/yetam/source/repos/OpenCv/OpenCv/coordinate10.csv", ios::out | ios::app);
         outputFile << "index: " << i << " x: " << maximumSpace[i][0] << " y: " << maximumSpace[i][1] << endl;
         outputFile.close();       
     }
@@ -299,48 +299,40 @@ void rotateCap(Mat image)
     
     for (int i = 20; i > 16; i--)
     {
-        maximumSpace[i][0] = min - counter;
+        maximumSpace[i][0] = min - counter + 1;
         counter++;
     } 
     counter++;
     for (int i = 16; i > 13; i--)
     {
-        maximumSpace[i][0] = min - counter;
+        maximumSpace[i][0] = min - counter + 1;
         counter++;
     }
-   
-    for (int i = 13; i > 9; i--)
+    counter = 3;
+    for (int i = 13; i >= 11; i--)
     {
-        if (i == 12)
-        {
-            maximumSpace[i][1] = maximumSpace[i][1] - 1;
-            continue;
-        }
-        maximumSpace[i][0] = min - counter + 8;
+        maximumSpace[i][0] = min - counter + 1;
         counter++;
     }
     counter++;
     counter++;
-    for (int i = 9; i > 6; i--)
+    for (int i = 10; i >= 8; i--)
     {
-        maximumSpace[i][0] = min - counter + 8;
+        maximumSpace[i][0] = min - counter + 1;
         counter++;
     }
-
-
-       counter = 3;
-    for (int i = 7; i >= 3; i--)
+     counter = 7;
+    for (int i = 7; i >= 4; i--)
     {
         maximumSpace[i][0] = min - counter;
         counter++;
     }
-      
-    for (int i = 2; i >= 0; i--)
+    counter = 2;
+    for (int i = 3; i >= 0; i--)
     {
-        maximumSpace[i][0] = min - counter - 2;
+        maximumSpace[i][0] = min - counter;
         counter++;
     }
-
     for (int k = 0; k < 115; k++)
     {
         image.at<Vec3b>(maximumSpace[k][1], maximumSpace[k][0]) = temp3[k];
@@ -894,7 +886,7 @@ void maximum(bool x, bool y, bool initialize) {
                 else
                 {
                     counter++;
-                    if (counter == 114)
+                    if (counter == 115)
                     {
                         breakFlag = true;
                     }
