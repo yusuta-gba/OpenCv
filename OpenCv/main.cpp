@@ -223,15 +223,15 @@ void rotateCap(Mat image)
         outputFile << "index: " << i << " x: " << maximumSpace[i][0] << " y: " << maximumSpace[i][1] << endl;
         outputFile.close();
     }
-
+    
     for (int i = 0; i < 8; i++)
     {
-        image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = bridge;
+        image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
     }
     for (int i = 8; i < 115; i++)
     {
         image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
-    }
+    } 
     for (int i = 0; i < 115; i++)
     {
         futureBox4[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
@@ -351,6 +351,10 @@ void rotateCap(Mat image)
         maximumSpace[i][0] = min - counter;
         counter++;
     }
+    for (int i = 0; i < 115; i++)
+    {
+        maximumSpace[i][0]= maximumSpace[i][0] + 9;
+    }
     for (int k = 0; k < 115; k++)
     {
      //   futureBox4[k] = image.at<Vec3b>(maximumSpace[k][1], maximumSpace[k][0]);
@@ -358,7 +362,7 @@ void rotateCap(Mat image)
     }
     display(image, 50);
 }
-void backwards(Mat image)
+void backwards(Mat image, bool direction)
 {
     Vec3b temp3[115];
     for (int j = 0; j < 12; j++)
@@ -384,7 +388,10 @@ void backwards(Mat image)
         }
         for (int i = 0; i < 115; i++)
         {
-            maximumSpace[i][0] = maximumSpace[i][0] - 1;
+            if(direction)
+                maximumSpace[i][0] = maximumSpace[i][0] - 1;
+            else
+                maximumSpace[i][0] = maximumSpace[i][0] + 1;
             futureBox4[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
             image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = temp3[i];
         }
@@ -841,24 +848,40 @@ void play2(Mat image, int shift)
  //   waitKey(20000);
     maximum(true, false, true);
     moveX2(image, 1, 150, false,false); 
-    backwards(image);
-    for (int i = 0; i < 20; i++)
+    backwards(image,true);
+    for (int i = 0; i <= 20; i++)
     {
         moveY2(image, 1, 1, true);
         moveX2(image, 12, 1,true, false);
-        if (i == 19)
+        if (i == 20)
             break;
-       backwards(image);
+       backwards(image, true);
     }
-    rotateCap(image);
-    //maximum(true, false, false);
+  
+    
+     rotateCap(image);
      moveX2(image, -1, 16, false,false);
      maximum(false, true, false);
-     for (int i = 1; i < 20; i++)
+     moveY2(image, 1, 1, true);
+     moveX2(image, -1, 23, false, false);
+     moveY2(image, 1, 1, true);
+     moveX2(image, -1, 34, false, false); 
+     moveY2(image, 1, 1, true);
+     moveX2(image, -1, 4, false, false);
+     moveX2(image, -12, 1, false, false);
+     backwards(image, false);
+     
+     for (int i = 0; i <= 20; i++)
      {
          moveY2(image, 1, 1, true);
-         display(image, 300);
-     }
+         moveX2(image, -12, 1, true, false);
+         if (i == 20)
+             break;
+         backwards(image, false);
+     } 
+    // moveY2(image, 1, 1, true);
+       //  display(image, 300);
+     
         while (true);
    
    
