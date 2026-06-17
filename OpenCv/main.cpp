@@ -174,6 +174,8 @@ bool firstMV_Y = true;
 bool firstMV_LADDER = true;
 bool first_MAXIMUM = true;
 bool first_backwards = true;
+bool first_rotate = true;
+int rotate_counter = 0;
 bool climb = false;
 void maximum(bool x, bool y, bool init);
 void play(Mat path, int shift);
@@ -201,7 +203,7 @@ int main() {
 */
 void rotateCap(Mat image, bool direction)
 {
-
+    rotate_counter++;
     maximum(false, true, false);
     int min = maximumSpace[114][0];
     int index = -1;
@@ -226,11 +228,18 @@ void rotateCap(Mat image, bool direction)
     
     for (int i = 0; i < 8; i++)
     {
-        if (direction)
+        if (first_rotate == true || rotate_counter == 4)
+        {
+           
             image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
+          
+        }
         else
+        {
             image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = bridge;
+        }
     }
+    first_rotate = false;
     for (int i = 8; i < 115; i++)
     {
         image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
@@ -412,7 +421,7 @@ void rotateCap(Mat image, bool direction)
         if (direction)
         maximumSpace[i][0]= maximumSpace[i][0] + 9;
      //   else
-       // maximumSpace[i][0] = maximumSpace[i][0] - 9;
+       // maximumSpace[i][0] = maximumSpace[i][0] + 9;
     }
     for (int k = 0; k < 115; k++)
     {
@@ -939,10 +948,65 @@ void play2(Mat image, int shift)
              break;
          backwards(image, false);
      }  
-     rotateCap(image, false); 
-    // moveY2(image, 1, 1, true);
-       //  display(image, 300);
-     
+     rotateCap(image, false);
+     moveY2(image, 1, 1, true);
+     moveX2(image, 1, 12, false, false);
+     backwards(image, true);
+     for (int i = 0; i < 22; i++)
+     {
+         moveY2(image, 1, 1, true);
+         moveX2(image, 12, 1, true, false);
+         if (i == 21)
+             break;
+         backwards(image, true);
+     } 
+     rotateCap(image, true);
+     moveX2(image, -1, 21, false, false);
+
+     moveY2(image, 1, 1, true);
+     moveX2(image, -1, 5, false, false);
+     moveX2(image, -1, 12, false, false);
+     backwards(image, false);
+     for (int i = 0; i < 22; i++)
+     {
+         moveY2(image, 1, 1, true);
+         moveX2(image, -12, 1, true, false);
+         if (i == 21)
+             break;
+         backwards(image, false);
+     }
+     rotateCap(image, false);
+     moveX2(image, 1, 5, false, false);
+     moveY2(image, 1, 1, true);
+     moveX2(image, 1, 52, false, false);
+     moveY2(image, 1, 1, true);
+     moveX2(image, 1, 52, false, false);
+     backwards(image, true);
+     for (int i = 0; i < 17; i++)
+     {
+         moveY2(image, 1, 1, true);
+         moveX2(image, 12, 1, true, false);
+         if (i == 16)
+             break;
+         backwards(image, true);
+     }
+     rotateCap(image, true);
+     moveY2(image, 1, 1, true);
+     moveX2(image, -1, 23, false,false);
+     moveY2(image, 1, 1, true);
+     moveX2(image, -1, 25, false, false);
+     moveY2(image, 1, 1, true);
+     moveX2(image, -1, 6, false, false);
+     backwards(image, true);
+     for (int i = 0; i < 17; i++)
+     {
+         moveY2(image, 1, 1, true);
+         moveX2(image, 12, 1, true, false);
+         if (i == 16)
+             break;
+         backwards(image, true);
+     }
+
         while (true);
    
    
