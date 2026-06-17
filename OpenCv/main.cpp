@@ -232,7 +232,10 @@ void rotateCap(Mat image)
     {
         image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
     }
-   
+    for (int i = 0; i < 115; i++)
+    {
+        futureBox4[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
+    }
     for (int i = 114; i >= 103; i--)
     {
         if (maximumSpace[i][0] < min)
@@ -350,7 +353,7 @@ void rotateCap(Mat image)
     }
     for (int k = 0; k < 115; k++)
     {
-        futureBox4[k] = image.at<Vec3b>(maximumSpace[k][1], maximumSpace[k][0]);
+     //   futureBox4[k] = image.at<Vec3b>(maximumSpace[k][1], maximumSpace[k][0]);
         image.at<Vec3b>(maximumSpace[k][1], maximumSpace[k][0]) = temp3[k];
     }
     display(image, 50);
@@ -394,7 +397,7 @@ void backwards(Mat image)
 
 
 }
-void moveX2(Mat image, int shift, int times, bool climb)
+void moveX2(Mat image, int shift, int times, bool climb, bool direction)
 {
   
     Vec3b bridge;
@@ -402,15 +405,17 @@ void moveX2(Mat image, int shift, int times, bool climb)
     bridge[0] = 255;
     bridge[1] = 66;
     bridge[2] = 107;
+    
         for (int j = 0; j < times; j++)
         {
             cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+          
+           
+               
+            
             for (int i = 0; i < 115; i++)
             {
                 temp[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
-            }
-            for (int i = 0; i < 115; i++)
-            {
                 if (first_MAXIMUM)
                 {
 
@@ -422,21 +427,17 @@ void moveX2(Mat image, int shift, int times, bool climb)
                 else
                 {
                     
-                    
-                       
-                    
-                    if (shift > 0)
-                    {
+                                        
                         image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = futureBox4[i];
 
-                    }
+                  
 
                 }
                 for (int j2 = 43; j2 <= 51; j2++)
                 {
                     if (maximumSpace[i][1] == 153 && image.at<Vec3b>(153, j2) == black && image.at<Vec3b>(153, j2) != bridge)
                         image.at<Vec3b>(153, j2) = bridge;
-                }
+                } 
                 maximumSpace[i][0] = maximumSpace[i][0] + shift;
                 futureBox4[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
                 image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = temp[i];
@@ -839,18 +840,25 @@ void play2(Mat image, int shift)
     display(image, 300);
  //   waitKey(20000);
     maximum(true, false, true);
-    moveX2(image, 1, 150, false); 
+    moveX2(image, 1, 150, false,false); 
     backwards(image);
     for (int i = 0; i < 20; i++)
     {
         moveY2(image, 1, 1, true);
-        moveX2(image, 12, 1,true);
+        moveX2(image, 12, 1,true, false);
         if (i == 19)
             break;
        backwards(image);
     }
     rotateCap(image);
-
+    //maximum(true, false, false);
+     moveX2(image, -1, 16, false,false);
+     maximum(false, true, false);
+     for (int i = 1; i < 20; i++)
+     {
+         moveY2(image, 1, 1, true);
+         display(image, 300);
+     }
         while (true);
    
    
