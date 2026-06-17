@@ -190,7 +190,7 @@ int main() {
     string imagePath = "C:/Users/yetam/source/repos/OpenCv/OpenCv/Screenshot.png";
     Mat image = imread(imagePath, IMREAD_COLOR);
     //  scan(image);
-    maximum(true,false, true);
+    
     play2(image, 10);
     //    scan(image);
    
@@ -206,6 +206,11 @@ void rotateCap(Mat image)
     int min = maximumSpace[114][0];
     int index = -1;
     Vec3b temp3[115];
+    Vec3b bridge;
+    bridge[0] = 255;
+    bridge[1] = 66;
+    bridge[2] = 107;
+
     cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
     for (int k = 0; k < 115; k++)
     {
@@ -214,10 +219,20 @@ void rotateCap(Mat image)
     for (int i = 114; i >= 0; i--)
     {
         ofstream outputFile;
-        outputFile.open("C:/Users/yetam/source/repos/OpenCv/OpenCv/coordinate10.csv", ios::out | ios::app);
+        outputFile.open("C:/Users/yetam/source/repos/OpenCv/OpenCv/coordinate1.csv", ios::out | ios::app);
         outputFile << "index: " << i << " x: " << maximumSpace[i][0] << " y: " << maximumSpace[i][1] << endl;
-        outputFile.close();       
+        outputFile.close();
     }
+
+    for (int i = 0; i < 8; i++)
+    {
+        image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = bridge;
+    }
+    for (int i = 8; i < 115; i++)
+    {
+        image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
+    }
+   
     for (int i = 114; i >= 103; i--)
     {
         if (maximumSpace[i][0] < min)
@@ -335,6 +350,7 @@ void rotateCap(Mat image)
     }
     for (int k = 0; k < 115; k++)
     {
+        futureBox4[k] = image.at<Vec3b>(maximumSpace[k][1], maximumSpace[k][0]);
         image.at<Vec3b>(maximumSpace[k][1], maximumSpace[k][0]) = temp3[k];
     }
     display(image, 50);
@@ -381,7 +397,10 @@ void backwards(Mat image)
 void moveX2(Mat image, int shift, int times, bool climb)
 {
   
-    
+    Vec3b bridge;
+    bridge[0] = 255;
+    bridge[1] = 66;
+    bridge[2] = 107;
         for (int j = 0; j < times; j++)
         {
             cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
@@ -390,7 +409,14 @@ void moveX2(Mat image, int shift, int times, bool climb)
                 temp[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
                 if (first_MAXIMUM)
                 {
-                    image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
+                   
+                        image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
+                        for (int j = 43; j <= 51; j++)
+                        {
+                            image.at<Vec3b>(153, j) = bridge;
+                        }
+                        
+                    
                 }
                 else
                 {
@@ -799,13 +825,16 @@ void play2(Mat image, int shift)
     cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
     display(image, 300);
  //   waitKey(20000);
+    maximum(true, false, true);
     moveX2(image, 1, 150, false); 
     backwards(image);
     for (int i = 0; i < 20; i++)
     {
         moveY2(image, 1, 1, true);
         moveX2(image, 12, 1,true);
-        backwards(image);
+        if (i == 19)
+            break;
+       backwards(image);
     }
     rotateCap(image);
 
