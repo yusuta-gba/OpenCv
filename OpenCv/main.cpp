@@ -199,7 +199,7 @@ int main() {
 /*
 * Just displaying the image.
 */
-void rotateCap(Mat image)
+void rotateCap(Mat image, bool direction)
 {
 
     maximum(false, true, false);
@@ -226,7 +226,10 @@ void rotateCap(Mat image)
     
     for (int i = 0; i < 8; i++)
     {
-        image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
+        if (direction)
+            image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
+        else
+            image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = bridge;
     }
     for (int i = 8; i < 115; i++)
     {
@@ -247,113 +250,169 @@ void rotateCap(Mat image)
     int counter = 1;
     for (int i = 114; i >= 111; i--)
     {
+        if(direction)
         maximumSpace[i][0] = min - counter - 3;
+        else
+            maximumSpace[i][0] = min + counter + 3;
         counter++;
     }
-    maximumSpace[110][0] = min -3;
+    if(direction)
+        maximumSpace[110][0] = min -3;
+    else
+        maximumSpace[110][0] = min +3;
     counter = 1;
     for (int i = 109; i >= 103; i--)
     {
+        if (direction)
         maximumSpace[i][0] = min - counter - 3;
+        else
+        maximumSpace[i][0] = min + counter + 3;
         counter++;
     }
     counter = 3;
     for (int i = 102; i >= 97; i--)
     {
+        if(direction)
         maximumSpace[i][0] = min - counter;
+        else
+        maximumSpace[i][0] = min + counter;
         counter++;
     }
     counter = 3;
     for (int i = 96; i >= 87; i--)
     {
+        if (direction)
         maximumSpace[i][0] = min - counter + 1;
+        else
+        maximumSpace[i][0] = min + counter - 1;
         counter++;
     }
     counter = 3;
     for (int i = 86; i > 75; i--)
     {
-      
-        maximumSpace[i][0] = min - counter + 1;
+        if (direction)
+            maximumSpace[i][0] = min - counter + 1;
+        else
+            maximumSpace[i][0] = min + counter - 1;
         counter++;
     }
 
     counter = 3;
     for (int i = 75; i > 64; i--)
     {
-        maximumSpace[i][0] = min - counter + 1 + 1;
+        if(direction)
+        maximumSpace[i][0] = min - counter + 2;
+        else
+        maximumSpace[i][0] = min + counter - 2;
         counter++;
     }
     counter = 4;
     for (int i = 64; i > 55; i--)
     {
-        maximumSpace[i][0] = min - counter + 1 + 1;
+        if (direction)
+            maximumSpace[i][0] = min - counter + 2;
+        else
+            maximumSpace[i][0] = min + counter - 2;
         counter++;
     }
     counter = 3;
     for (int i = 55; i > 47; i--)
     {
-        maximumSpace[i][0] = min - counter + 1;
+        if (direction)
+            maximumSpace[i][0] = min - counter + 1;
+        else
+            maximumSpace[i][0] = min + counter - 1;
         counter++;
     }
     counter = 3;
     for (int i = 47; i > 38; i--)
     {
-        maximumSpace[i][0] = min - counter + 1;
+        if (direction)
+            maximumSpace[i][0] = min - counter + 1;
+        else
+            maximumSpace[i][0] = min + counter - 1;
         counter++;
     }
     counter = 3;
     for (int i = 38; i > 29; i--)
     {
-        maximumSpace[i][0] = min - counter + 1;
+        if (direction)
+            maximumSpace[i][0] = min - counter + 1;
+        else
+            maximumSpace[i][0] = min + counter - 1;
         counter++;
     }
     counter = 3;
     for (int i = 29; i > 20; i--)
     {
-        maximumSpace[i][0] = min - counter + 1;
+        if (direction)
+            maximumSpace[i][0] = min - counter + 1;
+        else
+            maximumSpace[i][0] = min + counter - 1;
         counter++;
     }
     counter = 3;
     
     for (int i = 20; i > 16; i--)
     {
-        maximumSpace[i][0] = min - counter + 1;
+        if (direction)
+            maximumSpace[i][0] = min - counter + 1;
+        else
+            maximumSpace[i][0] = min + counter - 1;
         counter++;
     } 
     counter++;
     for (int i = 16; i > 13; i--)
     {
-        maximumSpace[i][0] = min - counter + 1;
+        if (direction)
+            maximumSpace[i][0] = min - counter + 1;
+        else
+            maximumSpace[i][0] = min + counter - 1;
         counter++;
     }
     counter = 3;
     for (int i = 13; i >= 11; i--)
     {
-        maximumSpace[i][0] = min - counter + 1;
+        if (direction)
+            maximumSpace[i][0] = min - counter + 1;
+        else
+            maximumSpace[i][0] = min + counter - 1;
         counter++;
     }
     counter++;
     counter++;
     for (int i = 10; i >= 8; i--)
     {
+        if (direction)
         maximumSpace[i][0] = min - counter + 1;
+        else
+        maximumSpace[i][0] = min + counter - 1;
         counter++;
     }
      counter = 7;
     for (int i = 7; i >= 4; i--)
     {
+        if (direction)
         maximumSpace[i][0] = min - counter;
+        else
+            maximumSpace[i][0] = min + counter;
         counter++;
     }
     counter = 2;
     for (int i = 3; i >= 0; i--)
     {
+        if (direction)
         maximumSpace[i][0] = min - counter;
+        else
+        maximumSpace[i][0] = min + counter;
         counter++;
     }
     for (int i = 0; i < 115; i++)
     {
+        if (direction)
         maximumSpace[i][0]= maximumSpace[i][0] + 9;
+     //   else
+       // maximumSpace[i][0] = maximumSpace[i][0] - 9;
     }
     for (int k = 0; k < 115; k++)
     {
@@ -859,7 +918,8 @@ void play2(Mat image, int shift)
     }
   
     
-     rotateCap(image);
+     rotateCap(image, true);
+     
      moveX2(image, -1, 16, false,false);
      maximum(false, true, false);
      moveY2(image, 1, 1, true);
@@ -868,7 +928,7 @@ void play2(Mat image, int shift)
      moveX2(image, -1, 34, false, false); 
      moveY2(image, 1, 1, true);
      moveX2(image, -1, 4, false, false);
-     moveX2(image, -12, 1, false, false);
+     moveX2(image, -1, 12, false, false);
      backwards(image, false);
      
      for (int i = 0; i <= 20; i++)
@@ -878,7 +938,8 @@ void play2(Mat image, int shift)
          if (i == 20)
              break;
          backwards(image, false);
-     } 
+     }  
+     rotateCap(image, false); 
     // moveY2(image, 1, 1, true);
        //  display(image, 300);
      
