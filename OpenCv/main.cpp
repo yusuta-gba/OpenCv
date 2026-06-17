@@ -398,6 +398,7 @@ void moveX2(Mat image, int shift, int times, bool climb)
 {
   
     Vec3b bridge;
+ 
     bridge[0] = 255;
     bridge[1] = 66;
     bridge[2] = 107;
@@ -407,19 +408,23 @@ void moveX2(Mat image, int shift, int times, bool climb)
             for (int i = 0; i < 115; i++)
             {
                 temp[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
+            }
+            for (int i = 0; i < 115; i++)
+            {
                 if (first_MAXIMUM)
                 {
-                   
-                        image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
-                        for (int j = 43; j <= 51; j++)
-                        {
-                            image.at<Vec3b>(153, j) = bridge;
-                        }
-                        
+
+                    image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = black;
                     
+                  
+
                 }
                 else
                 {
+                    
+                    
+                       
+                    
                     if (shift > 0)
                     {
                         image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = futureBox4[i];
@@ -427,13 +432,21 @@ void moveX2(Mat image, int shift, int times, bool climb)
                     }
 
                 }
+                for (int j2 = 43; j2 <= 51; j2++)
+                {
+                    if (maximumSpace[i][1] == 153 && image.at<Vec3b>(153, j2) == black && image.at<Vec3b>(153, j2) != bridge)
+                        image.at<Vec3b>(153, j2) = bridge;
+                }
                 maximumSpace[i][0] = maximumSpace[i][0] + shift;
                 futureBox4[i] = image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]);
                 image.at<Vec3b>(maximumSpace[i][1], maximumSpace[i][0]) = temp[i];
+                
 
             }
-
-            first_MAXIMUM = false;
+           
+                first_MAXIMUM = false;
+           
+            
             
             display(image, 1);
         }
